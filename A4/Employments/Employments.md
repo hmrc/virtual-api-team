@@ -24,6 +24,9 @@
 |  2   | How does a customer "delete" a pre-pop employment if they don't believe its valid | Group                                   | Customer will be able to submit an ignore override for the tax year. They cannot delete an RTI employment. |
 |  3   | Student Loans can be updated via 3pp and Student Loans service. Student loans service will only provide the updated deduction not the whole employment how is this being managed from a technical perspective | Ashleigh Carr, Jon Elliott, Tim Simpson |                                                              |
 |  4   | Expenses will not be pre-populated - do these need to be a dedicated endpoint |                                         |                                                              |
+|  5   | Row #44 Foreign tax for which tax credit relief not claimed - is this not covered in Reliefs? |  Heidi/SME to advise |  |
+|  6   | Rows #35-36 Class 2 and Class 4 National Insurance Contributions (NICs) - no class 2 details | Heidi/SME to advise |  |
+|  7   | Expenses: check for employment before submitting? Include employment expenses in /expenses API? Cumulative/YTD totals? | Group |  |
 
 \newpage
 
@@ -39,11 +42,12 @@
  
 ## Change Log
 
-| Version | Issue Date | Comments                                         |
-| ------- | ---------- | ------------------------------------------------ |
-| 1.0     | 20/05/2020 | Initial version looking at Employments retrieval |
-| 1.1      | 21/05/2020 | Refined the retrieval of employments by expanding the data fields |
-| 1.2 | 22/05/2020 | Added new issues from design session, updated schemata for list employments and get employment. Added delete operation. Added dateIgnored to represent the date the customer requested HMRC ignored a customer. |
+| Version | Date | Author | Comments                                         |
+| ------- | ---------- | --- | ------------------------------------------------ |
+| 1.0     | 20/05/2020 | Jon Elliot |Initial version looking at Employments retrieval |
+| 1.1      | 21/05/2020 | Jon Elliot |Refined the retrieval of employments by expanding the data fields |
+| 1.2 | 22/05/2020 | Jon Elliot |Added new issues from design session, updated schemata for list employments and get employment. Added delete operation. Added dateIgnored to represent the date the customer requested HMRC ignored a customer. |
+| 1.3      | 22/05/2020 | Toby Porter | Added Lump Sums, Pensions, Annuities & NICs |
   
 \newpage
 
@@ -619,7 +623,12 @@ N/A
         "directorshipCeasedDate": "2020-01-01",
         "startDate": "2019-01-01",
         "cessationDate": "2020-01-01",
-        "occupationalPension": false
+        "occupationalPension": false,
+        "disguisedRemuneration": false
+      },
+    "class2andClass4NicsContributions": {
+        "exemptFromPayingClass4Nics": false,
+        "adjustmentToProfitsChargeableToClass4Nics":  123.00
       },
       "pay": {
         "grossAmountPaidYtd": 1234.15,
@@ -676,9 +685,59 @@ N/A
         "vouchersAndCreditCards": 124.22,
         "nonCash": 124.22
       }
+    },
+  "pensions": [
+    {
+    "payeTaxReferenceOfPensionProvider": "123/XX12345",
+    "grossAmountPaid": 123.00,
+    "taxTakenOff": 123.00
     }
-  ]
-}
+  ],
+  "annuities": [
+    {
+      "payeTaxReferenceOfAnnuityProvider": "123/XX12345",
+      "grossAmountPaid": 123.00,
+      "taxTakenOff": 123.00
+    }
+  ],
+  "lumpSums": {
+     "compensationAndLumpSumsUpto30kExemption": 123.00,
+     "compensationAndLumpSumsAbove30kExemption": 123.00,
+     "pensionLumpSums": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "taxableLumpSumTreatedAsPension": 123.00,
+        "taxTakenOff": 123.00
+      }
+    ],
+    "taxableLumpSumsAfterTheEndofJob": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
+    "EmployerFinancedRetirementBenefitsScheme": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true,
+        "exemptionsForAmountEnteredForLumpSum": 123.00
+      }
+    ],
+    "RedundancyOtherLumpSumsAndCompensationPayments": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ]
+  }
+]
+
 ```
 
 #### Response Payload Example (Not Ignored By Customer)
@@ -753,7 +812,56 @@ N/A
     "travelAndSubsistence": 124.22,
     "vouchersAndCreditCards": 124.22,
     "nonCash": 124.22
-  }
+  },
+  "pensions": [
+    {
+    "payeTaxReferenceOfPensionProvider": "123/XX12345",
+    "grossAmountPaid": 123.00,
+    "taxTakenOff": 123.00
+    }
+  ],
+  "annuities": [
+    {
+      "payeTaxReferenceOfAnnuityProvider": "123/XX12345",
+      "grossAmountPaid": 123.00,
+      "taxTakenOff": 123.00
+    }
+  ],
+  "lumpSums": {
+     "compensationAndLumpSumsUpto30kExemption": 123.00,
+     "compensationAndLumpSumsAbove30kExemption": 123.00,
+     "pensionLumpSums": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "taxableLumpSumTreatedAsPension": 123.00,
+        "taxTakenOff": 123.00
+      }
+    ],
+    "taxableLumpSumsAfterTheEndofJob": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
+    "EmployerFinancedRetirementBenefitsScheme": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true,
+        "exemptionsForAmountEnteredForLumpSum": 123.00
+      }
+    ],
+    "RedundancyOtherLumpSumsAndCompensationPayments": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ]
 }
 ```
 
@@ -1238,7 +1346,12 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
         "directorshipCeasedDate": "2020-01-01",
         "startDate": "2019-01-01",
         "cessationDate": "2020-01-01",
-        "occupationalPension": false
+        "occupationalPension": false,
+        "disguisedRemuneration": false
+      },
+      "class2andClass4NicsContributions": {
+        "exemptFromPayingClass4Nics": false,
+        "adjustmentToProfitsChargeableToClass4Nics":  123.00
       },
       "pay": {
         "grossAmountPaidYtd": 1234.15,
@@ -1246,7 +1359,8 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
         "tipsAndOtherPayments": 10000.0,
         "payFrequency": "CALENDAR MONTHLY",
         "paymentDate": "2020-05-12",
-        "taxWeekNo": 52
+        "taxWeekNo": 52,
+        "taxMonthNo": 13
       },
       "deductions": {
         "studentLoans": {
@@ -1295,6 +1409,55 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
         "nonCash": 124.22
       }
     },
+  "pensions": [
+    {
+    "payeTaxReferenceOfPensionProvider": "123/XX12345",
+    "grossAmountPaid": 123.00,
+    "taxTakenOff": 123.00
+    }
+  ],
+  "annuities": [
+    {
+      "payeTaxReferenceOfAnnuityProvider": "123/XX12345",
+      "grossAmountPaid": 123.00,
+      "taxTakenOff": 123.00
+    }
+  ],
+  "lumpSums": {
+     "compensationAndLumpSumsUpto30kExemption": 123.00,
+     "compensationAndLumpSumsAbove30kExemption": 123.00,
+     "pensionLumpSums": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "taxableLumpSumTreatedAsPension": 123.00,
+        "taxTakenOff": 123.00
+      }
+    ],
+    "taxableLumpSumsAfterTheEndofJob": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
+    "EmployerFinancedRetirementBenefitsScheme": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true,
+        "exemptionsForAmountEnteredForLumpSum": 123.00
+      }
+    ],
+    "RedundancyOtherLumpSumsAndCompensationPayments": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
     {
       "ignoreEmployment": true
     }
@@ -1313,7 +1476,8 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
     "directorshipCeasedDate": "2020-01-01",
     "startDate": "2019-01-01",
     "cessationDate": "2020-01-01",
-    "occupationalPension": false
+    "occupationalPension": false,
+    "disguisedRemuneration": false,
   },
   "pay": {
     "grossAmountPaidYtd": 1234.15,
@@ -1322,6 +1486,10 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
     "payFrequency": "CALENDAR MONTHLY",
     "paymentDate": "2020-05-12",
     "taxWeekNo": 52
+  },
+  "class2andClass4NicsContributions": {
+    "exemptFromPayingClass4Nics": false,
+    "adjustmentToProfitsChargeableToClass4Nics":  123.00
   },
   "deductions": {
     "studentLoans": {
@@ -1369,6 +1537,55 @@ _/income/employments/{taxbleEntityId}/{taxYear}/{employmentId}_
     "vouchersAndCreditCards": 124.22,
     "nonCash": 124.22
   }
+  "pensions": [
+    {
+    "payeTaxReferenceOfPensionProvider": "123/XX12345",
+    "grossAmountPaid": 123.00,
+    "taxTakenOff": 123.00
+    }
+  ],
+  "annuities": [
+    {
+      "payeTaxReferenceOfAnnuityProvider": "123/XX12345",
+      "grossAmountPaid": 123.00,
+      "taxTakenOff": 123.00
+    }
+  ],
+  "lumpSums": {
+     "compensationAndLumpSumsUpto30kExemption": 123.00,
+     "compensationAndLumpSumsAbove30kExemption": 123.00,
+     "pensionLumpSums": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "taxableLumpSumTreatedAsPension": 123.00,
+        "taxTakenOff": 123.00
+      }
+    ],
+    "taxableLumpSumsAfterTheEndofJob": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
+    "EmployerFinancedRetirementBenefitsScheme": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true,
+        "exemptionsForAmountEnteredForLumpSum": 123.00
+      }
+    ],
+    "RedundancyOtherLumpSumsAndCompensationPayments": [
+      {
+        "payeTaxReferenceOfLumpSumProvider": "123/XX12345",
+        "grossAmountPaid": 123.00,
+        "taxTakenOff": 123.00,
+        "taxIncludedInEmploymentIncome": true
+      }
+    ],
 }
 ```
 
