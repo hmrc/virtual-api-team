@@ -2,7 +2,7 @@
 
 ## Decisions
 
-| Ref  | Decision                                                     | Rationale                                                    |
+| Ref  | Decision                                                     | Rationale                                                    |P0
 | :---: | :----------------------------------------------------------- | :----------------------------------------------------------- |
 |  1   | Customers will need to access each employment individually   | Overrides are considered a replacement, this would mean that either the customer would need to submit all fields across all employments even if they were only changing one field this will create a poor customer journey |
 |  2   | Each employment will be assigned a ITSD specific (unique) reference | Historic problems with encoding employer references drives us to avoid using it with payroll id as the unique identifier, therefore when an employment is created in the sub domain a unique id will be assigned to it |
@@ -694,6 +694,10 @@ N/A
         "nonCash": 124.22
       }
     }
+
+
+#Pension contribution charges
+101
 
 
 
