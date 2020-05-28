@@ -76,9 +76,9 @@ Or add references for multiples?
 ```json
 {
   "pensionSavingsTaxCharges": {
-    "pensionSchemeReferences": [
-        "pensionSchemeTaxReference":"ABC1234",  // check format
-        "pensionSchemeTaxReference": "XYZ4321"
+    "pensionSchemeTaxReferenceNumber": [
+        "ABC1234",
+        "XYZ4321"
     ],
     "lumpSumBenefitTakenInExcessOfLifetimeAllowance": 123.00,
     "benefitInExcessOfLifetimeAllowance:" 123.00,

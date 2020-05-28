@@ -1,4 +1,4 @@
-# Charges API Design Doc
+# Lumpsums API Design Doc
 
 ## Decisions
 
@@ -75,53 +75,7 @@ Or add references for multiples?
 
 ```json
 {
-  "pensionSavingsTaxCharges": {
-    "pensionSchemeReferences": [
-        "pensionSchemeTaxReference":"ABC1234",  // check format
-        "pensionSchemeTaxReference": "XYZ4321"
-    ],
-    "lumpSumBenefitTakenInExcessOfLifetimeAllowance": 123.00,
-    "benefitInExcessOfLifetimeAllowance:" 123.00,
-    "lifetimeAllowanceTaxPaid": 123.00
-    },
-  "pensionSchemeOverseasTransfers": {
-    "overseasSchemeProvider": [
-          {
-           "providerName": "",
-           "providerAddress": "",
-           "providerCountryCode": ""
-          }
-     ],
-    "transferCharge": 123.00,
-    "transferChargeTaxPaid": 123.00
-    },
-   "pensionSchemeUnauthorisedPayments": {
-      "pensionSchemeTaxReferenceNumber": [
-        "ABC1234",
-        "XYZ4321"
-      ],
-      "amountSurcharge":  123.00,
-      "amountNoSurcharge": 123.00,
-      "foreignTaxPaid": 123.00
-   },
-    "pensionContributions": {
-        "pensionSchemeTaxReferenceNumber": [
-            "ABC1234",
-            "XYZ4321"
-        ],
-        "inExcessOfTheAnnualAllowance" = 123.00,
-        "annualAllowanceTaxPaid" = 123.00
-  },
-  "overseasPensionContributions": {
-    "overseasSchemeProvider": [
-          {
-           "providerName": "",
-           "providerAddress": "",
-           "providerCountryCode": ""
-          }
-     ],
-    "shortServiceRefund": 123.00,
-    "shortServiceRefundTaxPaid": 123.00
-   }
+  
+
 }
 ```

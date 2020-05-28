@@ -634,11 +634,7 @@ N/A
         "occupationalPension": false,
         "disguisedRemuneration": false
       },
-    "class2andClass4NicsContributions": {
-        "exemptFromPayingClass4Nics": false,
-        "adjustmentToProfitsChargeableToClass4Nics":  123.00
-      },
-      "pay": {
+     "pay": {
         "grossAmountPaidYtd": 1234.15,
         "taxTakenOffYtd": 12.22,
         "tipsAndOtherPayments": 10000.0,
@@ -646,6 +642,10 @@ N/A
         "paymentDate": "2020-05-12",
         "taxWeekNo": 52,
         "taxMonthNo": 13
+      },
+      "foreignPay": {
+        "foreignTaxPaid": 123.00,
+        "foreignTaxCreditRelief": false
       },
       "deductions": {
         "studentLoans": {
@@ -693,11 +693,36 @@ N/A
         "vouchersAndCreditCards": 124.22,
         "nonCash": 124.22
       }
-    }
+      "lumpSums": {
+        "taxableLumpSumsAndCertainIncome":
+          {
+            "amount": 123.00,
+            "taxPaid": 123.00,
+            "taxTakenOffInEmployment": true
+          },                        
+         "benefitFromEmployerFinancedRetirementScheme": {
+            "amount": 123.00,
+            "exemptAmount": 123.00
+            "taxPaid": 123.00,
+            "taxTakenOffInEmployment": true
+          },
+        "redundancyCompensationPaymentsOverExemption": {
+            "amount": 123.00,
+            "taxPaid": 123.00,
+            "taxTakenOffInEmployment": true
+        },
+        "redundancyCompensationPaymentsUnderExemption": {
+            "amount": 123.00,
+        }
+      }
+}
 
 
-#Pension contribution charges
-101
+
+
+
+
+
 
 
 

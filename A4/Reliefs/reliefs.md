@@ -1,4 +1,4 @@
-# A4 Reliefs API Design Doc
+# A4 NIRS
 
 ## Decisions
 
@@ -29,7 +29,7 @@
 
 | Version | Date | Author | Comments                                         |
 | ------- | ---------- | --- | ------------------------------------------------ |
-| 1.0     | 27/05/2020 | Toby Porter |Initial version  |
+| 1.0     | 28/05/2020 | Toby Porter |Initial version  |
 
   
 
@@ -40,13 +40,13 @@
 #### Response Payload Schema
 
 
-#reliefs 
+#
 
 (new endpoint for pensions)
 
 #### URI
 
-_/reliefs/pensions/{taxableEntityId}/{taxYear}_
+_//{taxableEntityId}/{taxYear}_
 
 #### Parameters
 
@@ -58,14 +58,35 @@ _/reliefs/pensions/{taxableEntityId}/{taxYear}_
 
 ```json
 {
-  "pensionRelief": {
-    "regularPensionContributions:": 123.00,
-    "oneOffPensionContributionsPaid": 123.00,
-    "retirementAnnuityPayments": 123.00,
-    "paymentToEmployersSchemeNoTaxRelief": 123.00,
-    "overseasPensionSchemeContributions": 123.00
-    }
+  "statePension": {
+      "annualAmount": 123.00, //pre-pop
+      "lumpSumAmount": 123.00,  //pre-pop 
+      "lumpSumTaxPaid": 123.00  //pre-pop
+  },
+  "incapacityBenefit": {  //pre-pop P14?
+      "amount": 123.00,
+      "taxPaid": 123.00
+  },
+   "employmentSupportAllowance": {  //pre-pop P45? 
+       "amount": 123.00
+  },
+   "jobseekersAllowance": {    //pre-pop?
+        amount: 123.00
+  },
+    "bereavementAllowance": { 
+        "amount":  123.00
+  },
+    "widowedParentsAllowance": {
+      "amount":  123.00
+  }
+    "industrialDeathBenefit": {
+      "amount":  123.00
+  },
+    "carersAllowance": {
+      "amount":  123.00
+  },
+    "otherStatutoryBenefits": {
+      "amount": 123.00
+  }          
 }
 ```
-// no reliefClaimed?
-//     "overseasPensionSchemeContributions": 123.00,  # already in income/pensions?  
