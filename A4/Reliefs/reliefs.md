@@ -1,4 +1,4 @@
-# A4 NIRS
+# A4 Pension Reliefs 
 
 ## Decisions
 
@@ -12,7 +12,7 @@
 
 | Ref  | Description                                                  | Assigned To                             | Resolution                                                   |
 | :---: | :----------------------------------------------------------- | :-------------------------------------- | :----------------------------------------------------------- |
-|  1   |  |                          |                                                              |
+|  1   |  |  Which items should be pre-populated (and from what source)?              |  Heidi                                                            |
 
 \newpage
 
@@ -39,14 +39,11 @@
 
 #### Response Payload Schema
 
-
-#
-
-(new endpoint for pensions)
-
 #### URI
 
-_//{taxableEntityId}/{taxYear}_
+(new endpoint for pension reliefs)
+
+_/reliefs/pensions/{taxableEntityId}/{taxYear}_
 
 #### Parameters
 
@@ -59,26 +56,26 @@ _//{taxableEntityId}/{taxYear}_
 ```json
 {
   "statePension": {
-      "annualAmount": 123.00, //pre-pop
-      "lumpSumAmount": 123.00,  //pre-pop 
-      "lumpSumTaxPaid": 123.00  //pre-pop
+      "annualAmount": 123.00,
+      "lumpSumAmount": 123.00, 
+      "lumpSumTaxPaid": 123.00
   },
-  "incapacityBenefit": {  //pre-pop P14?
+  "incapacityBenefit": {  
       "amount": 123.00,
       "taxPaid": 123.00
   },
-   "employmentSupportAllowance": {  //pre-pop P45? 
+   "employmentSupportAllowance": {  
        "amount": 123.00
   },
-   "jobseekersAllowance": {    //pre-pop?
-        amount: 123.00
+   "jobseekersAllowance": {
+        "amount": 123.00
   },
     "bereavementAllowance": { 
         "amount":  123.00
   },
     "widowedParentsAllowance": {
       "amount":  123.00
-  }
+  },
     "industrialDeathBenefit": {
       "amount":  123.00
   },

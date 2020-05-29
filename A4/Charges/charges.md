@@ -2,9 +2,9 @@
 
 ## Decisions
 
-| Ref  | Decision                                                     | Rationale                                                    |P0
-| :---: | :----------------------------------------------------------- | :----------------------------------------------------------- |
-|  1   |    |   |
+| Ref  | Decision                                                       | Rationale                                                | P0 |
+|:---:|:---------------------------------------------------------------|:-------------------------------------------------------- |    |
+| 1   |  Pension references to be arrays per rolled-up annual amounts   | If figures are provided at detail level, then it would not be obvious if the annual allowance had been exceed or not  | |
 
 \newpage 
 
@@ -12,7 +12,7 @@
 
 | Ref  | Description                                                  | Assigned To                             | Resolution                                                   |
 | :---: | :----------------------------------------------------------- | :-------------------------------------- | :----------------------------------------------------------- |
-|  1   |  |                          |                                                              |
+|  1   |  What is the correct address format for the overseas pensions providers | Heidi                         |                                                              |
 
 \newpage
 
@@ -49,8 +49,7 @@ This API will be realised by ...
 
 #### URI
 
-_/charges/other?/{taxableEntityId}/{taxYear}_
-Tax-charges?
+_/charges/pensions/{taxableEntityId}/{taxYear}_
 
 #### Parameters
 
@@ -68,57 +67,52 @@ N/A
 
 ### Annual Rolled Up Figures 
 
-Or add references for multiples?
-```  "UkPensionSchemeTaxReferenceNumber"
-     "foreignSchemeReference"
-````
-
 ```json
 {
   "pensionSavingsTaxCharges": {
-    "pensionSchemeReferences": [
-        "pensionSchemeTaxReference":"ABC1234",  // check format
-        "pensionSchemeTaxReference": "XYZ4321"
+    "pensionSchemeTaxReference": [
+        "00123456RA",
+        "00654321RA"
     ],
     "lumpSumBenefitTakenInExcessOfLifetimeAllowance": 123.00,
-    "benefitInExcessOfLifetimeAllowance:" 123.00,
+    "benefitInExcessOfLifetimeAllowance": 123.00,
     "lifetimeAllowanceTaxPaid": 123.00
     },
   "pensionSchemeOverseasTransfers": {
     "overseasSchemeProvider": [
-          {
-           "providerName": "",
-           "providerAddress": "",
-           "providerCountryCode": ""
-          }
+       {
+       "providerName": "Overseas Pensions Plc",
+       "providerAddress": "111 Main Street, George Town, Grand Cayman", 
+       "providerCountryCode": "CYM"
+       }
      ],
     "transferCharge": 123.00,
     "transferChargeTaxPaid": 123.00
     },
    "pensionSchemeUnauthorisedPayments": {
-      "pensionSchemeTaxReferenceNumber": [
-        "ABC1234",
-        "XYZ4321"
-      ],
+   "pensionSchemeTaxReference": [
+        "00123456RA",
+        "00654321RA"
+     ],
       "amountSurcharge":  123.00,
       "amountNoSurcharge": 123.00,
       "foreignTaxPaid": 123.00
    },
     "pensionContributions": {
-        "pensionSchemeTaxReferenceNumber": [
-            "ABC1234",
-            "XYZ4321"
-        ],
-        "inExcessOfTheAnnualAllowance" = 123.00,
-        "annualAllowanceTaxPaid" = 123.00
+    "pensionSchemeTaxReference": [
+        "00123456RA",
+        "00654321RA"
+    ],
+     "inExcessOfTheAnnualAllowance": 123.00,
+     "annualAllowanceTaxPaid": 123.00
   },
   "overseasPensionContributions": {
     "overseasSchemeProvider": [
-          {
-           "providerName": "",
-           "providerAddress": "",
-           "providerCountryCode": ""
-          }
+      {
+       "providerName": "Overseas Pensions Plc",
+       "providerAddress": "111 Main Street, George Town, Grand Cayman", 
+       "providerCountryCode": "CYM"
+      }
      ],
     "shortServiceRefund": 123.00,
     "shortServiceRefundTaxPaid": 123.00
